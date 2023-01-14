@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 imageChooser();
             }
         });
-        uploadImage.setOnClickListener(view -> uploaddatatodb());
+        uploadImage.setOnClickListener(view -> getFiles());
     }
 
     void imageChooser() {
@@ -91,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    private String encodeBitmapImage(Bitmap bitmap)
-    {
-        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        byte[] bytesofimage=byteArrayOutputStream.toByteArray();
-        encodeImageString=Base64.encodeToString(bytesofimage, Base64.DEFAULT);
-        return encodeImageString;
-    }
-    private void uploaddatatodb()
+//    private String encodeBitmapImage(Bitmap bitmap)
+//    {
+//        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+//        byte[] bytesofimage=byteArrayOutputStream.toByteArray();
+//        encodeImageString=Base64.encodeToString(bytesofimage, Base64.DEFAULT);
+//        return encodeImageString;
+//    }
+    private void getFiles()
     {
         StringRequest request=new StringRequest(Request.Method.POST, url, response -> {
             try {
@@ -121,18 +121,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params= new HashMap<>();
-                String imageData = encodeBitmapImage(bitmap);
+//                String imageData = encodeBitmapImage(bitmap);
                 params.put("wstoken","4f3c9f8f0404a7db50825391c295937e");
-                params.put("wsfunction","core_files_upload");
+                params.put("wsfunction","core_files_get_files");
                 params.put("moodlewsrestformat","json");
-                params.put("component","admin");
-                params.put("filearea","draft");
-                params.put("itemid","0");
+//                params.put("field","19012011007");
+//                params.put("values","");
+//                params.put("draftitemid","");
+//                params.put("component","user");
+//                params.put("filearea","icon");
+//                params.put("itemid","0");
+//                params.put("filepath","/");
+//                params.put("filename","21012022022.jpg");
+//                params.put("filecontent",imageData);
+//                params.put("contextlevel","admin");
+//                params.put("instanceid","2");
+                params.put("contextid","13");
+                params.put("component","user");
+                params.put("filearea","icon");
                 params.put("filepath","/");
-                params.put("filename","21012022022.jpg");
-                params.put("filecontent",imageData);
-                params.put("contextlevel","admin");
-                params.put("instanceid","5");
+                params.put("itemid","0");
+                params.put("filename","f1.png");
                 return params;
             }
         };
